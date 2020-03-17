@@ -38,7 +38,8 @@ public class ReadFromFileIntoArrayList {
                 "for <remove> select :REMOVE space Index(n): \n" +
                 "for <Print> select only: LIST:\n" +
                 "for <exit and Save> select only :EXIT:\n" +
-                "for <support> select only :HELP:");
+                "for <support> select only :HELP:\n" +
+                "for <clear> select only :CLEAR:");
         Scanner scanner = new Scanner(System.in);
         String line;
         String[] array = {""};
@@ -71,7 +72,8 @@ public class ReadFromFileIntoArrayList {
                             "for <add> select :ADD space age: \n" +
                             "for <remove> select :REMOVE space Index(n): \n" +
                             "for <Print> select only: LIST:\n" +
-                            "for <exit and Save> select only :EXIT:\n");
+                            "for <exit and Save> select only :EXIT:\n+" +
+                            "for <clear> select only :CLEAR:");
                     break;
                 }
                 case "CLEAR": {
