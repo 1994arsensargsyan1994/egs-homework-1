@@ -22,14 +22,14 @@ public class ReadFromFileIntoArrayList {
     }
 
     private static void readFile() throws IOException, ClassNotFoundException {
-        try (ObjectInputStream oInput = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
-            User user = null;
-            while ((user = (User) oInput.readObject()) != null) {
-                users.add(user);
-            }
-        } catch (IOException ex) {
-            return;
-        }
+       try(BufferedReader bRid = new BufferedReader(new FileReader(FILE_PATH))) {
+           String str;
+           while ((str = bRid.readLine())!= null){
+               String []userNameAndAge = str.split(" ");
+               users.add(new User(userNameAndAge[0],Integer.parseInt(userNameAndAge[1])));
+           }
+       }
+
     }
 
     private static void writeFile() throws IOException {
@@ -72,7 +72,7 @@ public class ReadFromFileIntoArrayList {
                             "for <add> select :ADD space age: \n" +
                             "for <remove> select :REMOVE space Index(n): \n" +
                             "for <Print> select only: LIST:\n" +
-                            "for <exit and Save> select only :EXIT:\n+" +
+                            "for <exit and Save> select only :EXIT:\n" +
                             "for <clear> select only :CLEAR:");
                     break;
                 }
@@ -85,18 +85,22 @@ public class ReadFromFileIntoArrayList {
                 }
 
                 default: {
+                    if (array[0].equals("EXIT")){
+                        break;
+                    }
                     System.out.println("Input correct arguments:");
                     break;
                 }
 
             }
-            if (line.equals("EXIT")) {
-                try (ObjectOutputStream oOut = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            if (line.equalsIgnoreCase("EXIT")) {
+                try(BufferedWriter bWrit = new BufferedWriter(new FileWriter(FILE_PATH))){
                     for (User user : users) {
-                        oOut.writeObject(user);
+                        bWrit.write(user.getName()+" "+user.getEge()+"\n");
                     }
+                }
+
                 }
             }
         }
     }
-}
